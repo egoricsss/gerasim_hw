@@ -1,28 +1,39 @@
-#include <cstdlib>
-#include <ctime>
+#include <algorithm>
+#include <concepts>
+#include <cstddef>
 #include <iostream>
+#include <optional>
 #include <utility>
 #include <vector>
 
-template <class T>
+template <typename T>
+concept Comparable = requires(T a, T b) {
+  { a < b } -> std::convertible_to<bool>;
+  { a == b } -> std::convertible_to<bool>;
+};
 
-std::pair<size_t, size_t> split(std::vector<T> &a, T p) {
-  int low = 0, mid = 0, high = a.size() - 1;
+template <Comparable T>
+std::optional<std::pair<std::size_t, std::size_t>> split(std::vector<T> &a,
+                                                         T p) {
+  if (a.empty())
+    return std::nullopt;
+
+  std::size_t low = 0, mid = 0, high = a.size() - 1;
+
   while (mid <= high) {
     if (a[mid] < p) {
-      std::swap(a[low], a[mid]);
-      low++;
-      mid++;
+      std::ranges::swap(a[low], a[mid]);
+      ++low;
+      ++mid;
     } else if (a[mid] == p) {
-      mid++;
+      ++mid;
     } else {
-      std::swap(a[mid], a[high]);
-      high--;
+      std::ranges::swap(a[mid], a[high]);
+      high = (high == 0) ? 0 : high - 1
     }
   }
-  if (low > high)
-    return {-1, -1};
-  return {low, high};
+
+  return (low > high) ? std::nullopt : std::make_optional({low, high});
 }
 
 int main() {
