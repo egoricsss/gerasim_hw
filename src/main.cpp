@@ -1,11 +1,4 @@
-#include <algorithm>
-#include <concepts>
-#include <cstddef>
-#include <iostream>
-#include <iterator>
-#include <optional>
-#include <utility>
-#include <vector>
+#include "pch.hpp"
 
 template <typename T>
 concept Comparable = requires(T a, T b) {
@@ -60,7 +53,7 @@ int main() {
         const auto &[low, high] = *result;
 
         std::ranges::copy(arr, std::ostream_iterator<int>(std::cout, " "));
-        std::cout << "\n" << low << " " << high << "\n"; // 9. '\n' вместо endl
+        std::cout << "\n" << low << " " << high << "\n";
     } else {
         std::cerr << "Partitioning failed\n";
         return EXIT_FAILURE;
