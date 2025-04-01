@@ -84,6 +84,16 @@
 				"build-release"
 			],
 			"problemMatcher": []
+		},
+		{
+			"label": "Build and Run Tests",
+			"type": "shell",
+			"command": "g++ -std=c++23 ${workspaceFolder}/test/test.cpp -o ${workspaceFolder}/build/tests -lgtest -lgtest_main -pthread && ${workspaceFolder}/build/tests",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": []
 		}
 	]
 }
