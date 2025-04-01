@@ -1,0 +1,89 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "configure-debug",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"-B",
+				"build",
+				"-DCMAKE_BUILD_TYPE=Debug",
+				"-GNinja"
+			],
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "configure-release",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"-B",
+				"build",
+				"-DCMAKE_BUILD_TYPE=Release",
+				"-GNinja"
+			],
+			"group": "build",
+			"problemMatcher": []
+		},
+		{
+			"label": "build-debug",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"--build",
+				"build",
+				"--config",
+				"Debug",
+				"--parallel",
+				"$(nproc)"
+			],
+			"group": "build",
+			"dependsOn": [
+				"configure-debug"
+			],
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"label": "build-release",
+			"type": "shell",
+			"command": "cmake",
+			"args": [
+				"--build",
+				"build",
+				"--config",
+				"Release",
+				"--parallel",
+				"$(nproc)"
+			],
+			"group": "build",
+			"dependsOn": [
+				"configure-release"
+			],
+			"problemMatcher": [
+				"$gcc"
+			]
+		},
+		{
+			"label": "run-debug",
+			"type": "shell",
+			"command": "clear && ${workspaceFolder}/build/${workspaceFolderBasename}",
+			"dependsOn": [
+				"build-debug"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "run-release",
+			"type": "shell",
+			"command": "clear && ${workspaceFolder}/build/${workspaceFolderBasename}",
+			"dependsOn": [
+				"build-release"
+			],
+			"problemMatcher": []
+		}
+	]
+}

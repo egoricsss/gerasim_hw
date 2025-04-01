@@ -1,0 +1,18 @@
+{
+    "cmake.buildDirectory": "${workspaceFolder}/build",
+    "cmake.generator": "Ninja",
+    "cmake.configureArgs": [
+        "-DCMAKE_CXX_FLAGS_RELEASE=-O3 -march=native -flto",
+        "-DCMAKE_EXE_LINKER_FLAGS_RELEASE=-flto"
+    ],
+    "files.exclude": {
+        "build/**": true,
+        "**/*.o": true,
+        "**/*.a": true,
+        ".vscode": true,
+	".clang-format": true
+    },
+    "files.associations": {
+        "optional": "cpp"
+    }
+}
