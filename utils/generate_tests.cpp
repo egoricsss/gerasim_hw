@@ -4,8 +4,6 @@
 #include <random>
 #include <vector>
 
-#include "../include/split.hpp"
-
 std::vector<int> generate_random_array(int size, int min_val, int max_val)
 {
     std::vector<int> arr(size);
@@ -103,6 +101,6 @@ int main()
 {
     generate_median_tests("../generated_median_tests.txt", 100);
     generate_split_tests("../generated_split_tests.txt", 100);
-    std::cout << "100 tests write in generated_tests.txt and generated_split_tests.txt\n";
+    std::cout << "100 tests write in generated_median_tests.txt and generated_split_tests.txt\n";
     return 0;
 }
