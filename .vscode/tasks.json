@@ -41,7 +41,8 @@
 			],
 			"group": "build",
 			"dependsOn": [
-				"configure-debug"
+				"configure-debug",
+				"Build and Run Tests"
 			],
 			"problemMatcher": [
 				"$gcc"
@@ -70,7 +71,7 @@
 		{
 			"label": "run-debug",
 			"type": "shell",
-			"command": "clear && ${workspaceFolder}/build/${workspaceFolderBasename}",
+			"command": "clear && ${workspaceFolder}/build/${workspaceFolderBasename} && ${workspaceFolder}/build/tests",
 			"dependsOn": [
 				"build-debug"
 			],
@@ -97,3 +98,4 @@
 		}
 	]
 }
+

@@ -6,6 +6,9 @@
 !.vscode/c_cpp_properties.json
 !.vscode/extensions.json
 
+# generated_tests
+*.txt
+
 # Build artefacts
 build
 

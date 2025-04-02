@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.20)
 get_filename_component(PROJECT_NAME ${CMAKE_SOURCE_DIR} NAME)
 project(${PROJECT_NAME} LANGUAGES CXX)
 
+include(CTest)
+
+enable_testing() 
 
 include_directories(
     ${CMAKE_SOURCE_DIR}/include
@@ -20,6 +23,12 @@ set(CMAKE_EXE_LINKER_FLAGS_RELEASE "-flto")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(${PROJECT_NAME}
-    src/main.cpp
-)
+add_executable(${PROJECT_NAME} src/main.cpp)
+
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+add_executable(tests test/test.cpp)
+target_link_libraries(tests GTest::GTest GTest::Main pthread)
+
+add_test(NAME RunTests COMMAND tests)
