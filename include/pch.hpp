@@ -1,9 +1,0 @@
-#pragma once
-#include <algorithm>
-#include <concepts>
-#include <cstdlib>
-#include <iostream>
-#include <iterator>
-#include <optional>
-#include <ranges>
-#include <vector>
