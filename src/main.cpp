@@ -1,4 +1,5 @@
 #include <iostream>
+#include <limits>
 #include <vector>
 
 #include "bfprt.hpp"
@@ -11,7 +12,7 @@ int main()
         std::cout << "Enter array size: ";
         if (!(std::cin >> n) || n == 0)
         {
-            throw std::runtime_error("Invalid array size");
+            throw std::invalid_argument("Invalid array size");
         }
 
         std::vector<int> numbers(n);
@@ -20,7 +21,7 @@ int main()
         {
             if (!(std::cin >> el))
             {
-                throw std::runtime_error("Invalid array element");
+                throw std::invalid_argument("Invalid array element");
             }
         }
 
@@ -28,7 +29,7 @@ int main()
         std::cout << "Enter pivot element: ";
         if (!(std::cin >> pivot))
         {
-            throw std::runtime_error("Invalid pivot element");
+            throw std::invalid_argument("Invalid pivot element");
         }
 
         auto split_result = split(std::span{numbers}, pivot);

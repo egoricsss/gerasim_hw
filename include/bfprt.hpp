@@ -11,7 +11,7 @@
 namespace bfprt
 {
 template <Comparable T>
-constexpr void sorting_network(std::span<T> arr)
+constexpr void sorting_network(std::span<T> arr) noexcept
 {
     switch (arr.size())
     {
@@ -43,7 +43,7 @@ constexpr void sorting_network(std::span<T> arr)
 }
 
 template <Comparable T>
-std::optional<T> select(std::span<T> arr, std::size_t k)
+[[nodiscard]] std::optional<T> select(std::span<T> arr, std::size_t k) noexcept
 {
     if (arr.empty() || k >= arr.size())
     {
