@@ -13,7 +13,7 @@ concept Comparable = requires(T a, T b) {
 };
 
 template <Comparable T>
-[[nodiscard]] std::optional<std::pair<std::size_t, std::size_t>> split(std::span<T> a, const T& p) noexcept
+[[nodiscard("UNUSED SPLIT - LOW, HIGH")]] std::optional<std::pair<std::size_t, std::size_t>> split(std::span<T> a, const T& p) noexcept
 {
     if (a.empty()) return std::nullopt;
     std::size_t low = 0, mid = 0, high = a.size() - 1;

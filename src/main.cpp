@@ -4,7 +4,7 @@
 
 #include "bfprt.hpp"
 
-int main()
+[[noreturn]] int main()
 {
     try
     {

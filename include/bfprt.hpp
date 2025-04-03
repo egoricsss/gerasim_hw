@@ -16,22 +16,33 @@ constexpr void sorting_network(std::span<T> arr) noexcept
     switch (arr.size())
     {
         case 2:
-            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
+            if (arr[0] > arr[1]) [[likely]]
+                std::ranges::swap(arr[0], arr[1]);
             break;
         case 3:
-            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
-            if (arr[1] > arr[2]) std::ranges::swap(arr[1], arr[2]);
-            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
+            if (arr[0] > arr[1]) [[likely]]
+                std::ranges::swap(arr[0], arr[1]);
+            if (arr[1] > arr[2]) [[likely]]
+                std::ranges::swap(arr[1], arr[2]);
+            if (arr[0] > arr[1]) [[likely]]
+                std::ranges::swap(arr[0], arr[1]);
             break;
         case 4:
-            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
-            if (arr[2] > arr[3]) std::ranges::swap(arr[2], arr[3]);
-            if (arr[0] > arr[2]) std::ranges::swap(arr[0], arr[2]);
-            if (arr[1] > arr[3]) std::ranges::swap(arr[1], arr[3]);
-            if (arr[1] > arr[2]) std::ranges::swap(arr[1], arr[2]);
+            if (arr[0] > arr[1]) [[likely]]
+                std::ranges::swap(arr[0], arr[1]);
+            if (arr[2] > arr[3]) [[likely]]
+                std::ranges::swap(arr[2], arr[3]);
+            if (arr[0] > arr[2]) [[likely]]
+                std::ranges::swap(arr[0], arr[2]);
+            if (arr[1] > arr[3]) [[likely]]
+                std::ranges::swap(arr[1], arr[3]);
+            if (arr[1] > arr[2]) [[likely]]
+                std::ranges::swap(arr[1], arr[2]);
             break;
         case 5:
-            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
+            [[likely]]
+            if (arr[0] > arr[1])
+                std::ranges::swap(arr[0], arr[1]);
             if (arr[3] > arr[4]) std::ranges::swap(arr[3], arr[4]);
             if (arr[0] > arr[3]) std::ranges::swap(arr[0], arr[3]);
             if (arr[1] > arr[4]) std::ranges::swap(arr[1], arr[4]);
@@ -39,6 +50,8 @@ constexpr void sorting_network(std::span<T> arr) noexcept
             if (arr[2] > arr[3]) std::ranges::swap(arr[2], arr[3]);
             if (arr[1] > arr[2]) std::ranges::swap(arr[1], arr[2]);
             break;
+        default:
+            [[unlikely]] break;
     }
 }
 }  // namespace detail
@@ -46,7 +59,7 @@ constexpr void sorting_network(std::span<T> arr) noexcept
 namespace bfprt
 {
 template <Comparable T>
-[[nodiscard]] std::optional<T> select(std::span<T> arr, std::size_t k) noexcept
+[[nodiscard("UNUSED MEDIAN OF MEDIANS")]] std::optional<T> select(std::span<T> arr, std::size_t k) noexcept
 {
     if (arr.empty() || k >= arr.size())
     {
@@ -66,7 +79,7 @@ template <Comparable T>
         std::size_t len = std::min<std::size_t>(5, arr.size() - i);
         std::span<T> group = arr.subspan(i, len);
         detail::sorting_network(group);
-        medians.push_back(group[len / 2]);  
+        medians.push_back(group[len / 2]);
     }
 
     auto mom = bfprt::select(std::span{medians}, medians.size() / 2);
