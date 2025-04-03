@@ -16,28 +16,28 @@ constexpr void sorting_network(std::span<T> arr) noexcept
     switch (arr.size())
     {
         case 2:
-            if (arr[0] > arr[1]) std::swap(arr[0], arr[1]);
+            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
             break;
         case 3:
-            if (arr[0] > arr[1]) std::swap(arr[0], arr[1]);
-            if (arr[1] > arr[2]) std::swap(arr[1], arr[2]);
-            if (arr[0] > arr[1]) std::swap(arr[0], arr[1]);
+            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
+            if (arr[1] > arr[2]) std::ranges::swap(arr[1], arr[2]);
+            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
             break;
         case 4:
-            if (arr[0] > arr[1]) std::swap(arr[0], arr[1]);
-            if (arr[2] > arr[3]) std::swap(arr[2], arr[3]);
-            if (arr[0] > arr[2]) std::swap(arr[0], arr[2]);
-            if (arr[1] > arr[3]) std::swap(arr[1], arr[3]);
-            if (arr[1] > arr[2]) std::swap(arr[1], arr[2]);
+            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
+            if (arr[2] > arr[3]) std::ranges::swap(arr[2], arr[3]);
+            if (arr[0] > arr[2]) std::ranges::swap(arr[0], arr[2]);
+            if (arr[1] > arr[3]) std::ranges::swap(arr[1], arr[3]);
+            if (arr[1] > arr[2]) std::ranges::swap(arr[1], arr[2]);
             break;
         case 5:
-            if (arr[0] > arr[1]) std::swap(arr[0], arr[1]);
-            if (arr[3] > arr[4]) std::swap(arr[3], arr[4]);
-            if (arr[0] > arr[3]) std::swap(arr[0], arr[3]);
-            if (arr[1] > arr[4]) std::swap(arr[1], arr[4]);
-            if (arr[1] > arr[2]) std::swap(arr[1], arr[2]);
-            if (arr[2] > arr[3]) std::swap(arr[2], arr[3]);
-            if (arr[1] > arr[2]) std::swap(arr[1], arr[2]);
+            if (arr[0] > arr[1]) std::ranges::swap(arr[0], arr[1]);
+            if (arr[3] > arr[4]) std::ranges::swap(arr[3], arr[4]);
+            if (arr[0] > arr[3]) std::ranges::swap(arr[0], arr[3]);
+            if (arr[1] > arr[4]) std::ranges::swap(arr[1], arr[4]);
+            if (arr[1] > arr[2]) std::ranges::swap(arr[1], arr[2]);
+            if (arr[2] > arr[3]) std::ranges::swap(arr[2], arr[3]);
+            if (arr[1] > arr[2]) std::ranges::swap(arr[1], arr[2]);
             break;
     }
 }
