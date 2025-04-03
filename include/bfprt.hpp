@@ -8,7 +8,7 @@
 
 #include "split.hpp"
 
-namespace bfprt
+namespace detail
 {
 template <Comparable T>
 constexpr void sorting_network(std::span<T> arr) noexcept
@@ -41,7 +41,10 @@ constexpr void sorting_network(std::span<T> arr) noexcept
             break;
     }
 }
+}  // namespace detail
 
+namespace bfprt
+{
 template <Comparable T>
 [[nodiscard]] std::optional<T> select(std::span<T> arr, std::size_t k) noexcept
 {
@@ -52,17 +55,18 @@ template <Comparable T>
 
     if (arr.size() <= 5)
     {
-        sorting_network(std::span{arr});
+        detail::sorting_network(std::span{arr});
         return arr[k];
     }
 
     std::vector<T> medians;
     medians.reserve((arr.size() + 4) / 5);
-    for (auto group : arr | std::views::chunk(5))
+    for (std::size_t i = 0; i < arr.size(); i += 5)
     {
-        auto g = std::vector<T>(group.begin(), group.end());
-        sorting_network(std::span{g});
-        medians.push_back(g[g.size() / 2]);
+        std::size_t len = std::min<std::size_t>(5, arr.size() - i);
+        std::span<T> group = arr.subspan(i, len);
+        detail::sorting_network(group);
+        medians.push_back(group[len / 2]);  
     }
 
     auto mom = bfprt::select(std::span{medians}, medians.size() / 2);
@@ -87,5 +91,4 @@ template <Comparable T>
     }
 }
 }  // namespace bfprt
-
 #endif  // BFPRT_HPP
