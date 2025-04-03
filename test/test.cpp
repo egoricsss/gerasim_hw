@@ -54,7 +54,7 @@ std::vector<MedianTest> read_median_tests(const std::string& filename)
         std::istringstream expected_stream(line.substr(16));
         expected_stream >> expected;
 
-        std::getline(file, line);  // Пропуск разделителя
+        std::getline(file, line);
 
         tests.push_back({test_number++, std::move(arr), expected});
     }
@@ -94,13 +94,12 @@ std::vector<SplitTest> read_split_tests(const std::string& filename)
         std::getline(file, line);
         std::size_t high_index = std::stoul(line.substr(11));
 
-        std::getline(file, line); 
+        std::getline(file, line);
 
         tests.push_back({test_number++, std::move(arr), pivot, low_index, high_index});
     }
     return tests;
 }
-
 
 class MedianSelectionTest : public ::testing::TestWithParam<MedianTest>
 {

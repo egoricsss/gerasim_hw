@@ -61,9 +61,9 @@ void generate_split_tests(const std::string& filename, int num_tests)
 
     for (int i = 0; i < num_tests; i++)
     {
-        int size = 5 + (i % 20) * 10000;  // Размер массива от 5 до 100000
+        int size = 5 + (i % 20) * 10000; 
         auto arr = generate_random_array(size, -1000, 1000);
-        int pivot = arr[size / 2];  // Выбираем pivot как средний элемент
+        int pivot = arr[size / 2]; 
 
         std::size_t low_index = 0, high_index = 0;
         std::size_t count_equal = 0;
