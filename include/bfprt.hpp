@@ -61,11 +61,6 @@ namespace bfprt
 template <Comparable T>
 [[nodiscard("UNUSED MEDIAN OF MEDIANS")]] std::optional<T> select(std::span<T> arr, std::size_t k) noexcept
 {
-    if (arr.empty() || k >= arr.size())
-    {
-        return std::nullopt;
-    }
-
     if (arr.size() <= 5)
     {
         detail::sorting_network(std::span{arr});
