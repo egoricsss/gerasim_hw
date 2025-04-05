@@ -36,7 +36,7 @@ template <Comparable T>
         }
     }
 
-    return (low > high) ? std::nullopt : std::make_optional(std::pair{low, high});
+    return std::make_optional(std::pair{low, high});
 }
 
 #endif  // SPLIT_HPP
