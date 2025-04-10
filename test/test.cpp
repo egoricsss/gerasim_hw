@@ -8,6 +8,7 @@
 
 #include "../include/bfprt.hpp"
 #include "../include/split.hpp"
+#include "../include/select.hpp"
 
 struct MedianTest
 {
@@ -101,9 +102,22 @@ std::vector<SplitTest> read_split_tests(const std::string& filename)
     return tests;
 }
 
+class HWMedianSelectionTest : public ::testing::TestWithParam<MedianTest>
+{
+};
+
 class MedianSelectionTest : public ::testing::TestWithParam<MedianTest>
 {
 };
+
+TEST_P(HWMedianSelectionTest, EachTest)
+{
+    const auto& test = GetParam();
+    std::vector<int> test_arr = test.arr;
+    auto result = accessed_homework::select(std::span{test_arr}, test_arr.size() / 2);
+    ASSERT_TRUE(result.has_value()) << "Test #" << test.test_number;
+    EXPECT_EQ(result.value(), test.expected) << "Test #" << test.test_number;
+}
 
 TEST_P(MedianSelectionTest, EachTest)
 {
@@ -146,6 +160,8 @@ TEST_P(SplitCorrectnessTest, EachTest)
 
 const auto median_tests = read_median_tests("generated_median_tests.txt");
 const auto split_tests = read_split_tests("generated_split_tests.txt");
+
+INSTANTIATE_TEST_SUITE_P(HWGeneratedTests, HWMedianSelectionTest, ::testing::ValuesIn(median_tests));
 
 INSTANTIATE_TEST_SUITE_P(BfprtGeneratedTests, MedianSelectionTest, ::testing::ValuesIn(median_tests));
 

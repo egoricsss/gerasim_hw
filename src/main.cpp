@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "bfprt.hpp"
+#include "select.hpp"
 
 int main()
 {
@@ -49,7 +50,7 @@ int main()
         }
 
         const std::size_t median_pos = numbers.size() / 2;
-        if (auto median = bfprt::select(std::span{numbers}, median_pos))
+        if (auto median = accessed_homework::select(std::span{numbers}, median_pos))
         {
             std::cout << "\nMedian: " << *median << "\n";
         }
