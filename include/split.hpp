@@ -35,7 +35,6 @@ template <Comparable T>
             --high;
         }
     }
-
     return std::make_optional(std::pair{low, high});
 }
 
