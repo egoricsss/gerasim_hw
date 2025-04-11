@@ -8,7 +8,11 @@
 
 namespace accessed_homework
 {
-template <Comparable T>
+// Функция get_random_element:
+// Вход:
+//  - arr[0..n-1]: - массив из n ≥ 1 элемента
+// Выход: случайный элемент arr[0..n-1] (рановероятно)
+template <typename T>
 const T& get_random_element(std::span<T> arr) noexcept
 {
     static std::mt19937 gen(std::random_device{}());
@@ -16,6 +20,18 @@ const T& get_random_element(std::span<T> arr) noexcept
     return arr[dist(gen)];
 }
 
+// Функция select:
+// Вход:
+//  - arr[0..n-1]: массив из n ≥ 1 элемента типа T
+//  - k: индекс искомого порядкового статистического элемента, k ∈ 0..n-1
+//
+// Выход:
+//  - std::optional<T>:
+//      * Значение - если массив не пуст и индекс корректный (k ∈ 0..n-1)
+//      * std::nullopt - если массив пуст
+//
+// Побочные эффекты:
+//  - Модифицирует (переставляет) элементы массива `arr` в процессе выполнения
 template <Comparable T>
 std::optional<T> select(std::span<T> arr, std::size_t k) noexcept
 {
