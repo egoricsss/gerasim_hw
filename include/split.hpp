@@ -35,26 +35,30 @@ template <Comparable T>
 std::optional<std::pair<std::size_t, std::size_t>> split(std::span<T> arr, const T& p) noexcept
 {
     if (arr.empty()) return std::nullopt;
-    std::size_t l = 0, mid = 0, r = arr.size() - 1;
-    while (mid <= r)
+
+    std::size_t n = arr.size();
+    std::size_t i = 0;
+
+    for (std::size_t j = 0; j < n; ++j)
     {
-        if (arr[mid] < p)
+        if (arr[j] < p)
         {
-            std::ranges::swap(arr[l], arr[mid]);
-            ++l;
-            ++mid;
-        }
-        else if (arr[mid] == p)
-        {
-            ++mid;
-        }
-        else
-        {
-            std::ranges::swap(arr[mid], arr[r]);
-            --r;
+            std::ranges::swap(arr[i], arr[j]);
+            ++i;
         }
     }
-    return std::make_optional(std::pair{l, r});
+
+    std::size_t l = i;
+    for (std::size_t j = i; j < n; ++j)
+    {
+        if (arr[j] == p)
+        {
+            std::ranges::swap(arr[i], arr[j]);
+            ++i;
+        }
+    }
+
+    return std::make_optional(std::pair{l, i - 1});
 }
 
 #endif  // SPLIT_HPP
