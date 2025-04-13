@@ -136,7 +136,7 @@ TEST_P(SplitCorrectnessTest, EachTest)
 {
     const auto& test = GetParam();
     std::vector<int> test_arr = test.arr;
-    auto split_result = split(std::span{test_arr}, test.pivot);
+    auto split_result = accessed_homework::split(std::span{test_arr}, test.pivot);
 
     ASSERT_TRUE(split_result.has_value()) << "Test #" << test.test_number;
     auto [low, high] = split_result.value();

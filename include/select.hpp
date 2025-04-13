@@ -32,12 +32,12 @@ const T& get_random_element(std::span<T> arr) noexcept
 //
 // Побочные эффекты:
 //  - Модифицирует (переставляет) элементы массива `arr` в процессе выполнения
-template <Comparable T>
+template <accessed_homework::Comparable T>
 std::optional<T> select(std::span<T> arr, std::size_t k) noexcept
 {
     if (arr.empty()) return std::nullopt;
     T p = get_random_element(std::span{arr});
-    auto split_result = split(std::span{arr}, p);
+    auto split_result = accessed_homework::split(std::span{arr}, p);
     if (!split_result) return std::nullopt;
     auto [l, r] = *split_result;
     if (k < l) return select(arr.subspan(0, l), k);

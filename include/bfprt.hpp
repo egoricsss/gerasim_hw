@@ -10,7 +10,7 @@
 
 namespace detail
 {
-template <Comparable T>
+template <accessed_homework::Comparable T>
 constexpr void sorting_network(std::span<T> arr) noexcept
 {
     switch (arr.size())
@@ -45,7 +45,7 @@ constexpr void sorting_network(std::span<T> arr) noexcept
 
 namespace bfprt
 {
-template <Comparable T>
+template <accessed_homework::Comparable T>
 [[nodiscard("UNUSED MEDIAN OF MEDIANS")]] std::optional<T> select(std::span<T> arr, std::size_t k) noexcept
 {
     if (arr.size() <= 5)
@@ -67,7 +67,7 @@ template <Comparable T>
     auto mom = bfprt::select(std::span{medians}, medians.size() / 2);
     if (!mom) return std::nullopt;
 
-    auto split_result = split(arr, *mom);
+    auto split_result = accessed_homework::split(arr, *mom);
     if (!split_result) return std::nullopt;
 
     auto [low, high] = *split_result;

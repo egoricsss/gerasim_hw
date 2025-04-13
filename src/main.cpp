@@ -29,7 +29,7 @@ int main()
         {
             throw std::invalid_argument("Invalid pivot element");
         }
-        auto split_result = split(std::span{numbers}, pivot);
+        auto split_result = accessed_homework::split(std::span{numbers}, pivot);
         if (split_result)
         {
             const auto& [low, high] = *split_result;

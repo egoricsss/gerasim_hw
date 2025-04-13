@@ -6,6 +6,9 @@
 #include <ranges>
 #include <span>
 
+namespace accessed_homework
+{
+
 // Концепт, определяющий требования: тип T должен поддерживать операции сравнения (`<`, `==`)
 template <typename T>
 concept Comparable = requires(T a, T b) {
@@ -60,5 +63,5 @@ std::optional<std::pair<std::size_t, std::size_t>> split(std::span<T> arr, const
 
     return std::make_optional(std::pair{l, i - 1});
 }
-
+}  // namespace accessed_homework
 #endif  // SPLIT_HPP
