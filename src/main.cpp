@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <vector>
 
-namespace accessed_homework
+namespace assessed_homework
 {
 // Концепт, определяющий требования: тип T должен поддерживать операции сравнения (`<`, `==`)
 template <typename T>
@@ -81,7 +81,7 @@ int main()
         {
             throw std::invalid_argument("Invalid pivot element");
         }
-        auto split_result = accessed_homework::split(std::span{numbers}, pivot);
+        auto split_result = assessed_homework::split(std::span{numbers}, pivot);
         if (split_result)
         {
             const auto& [low, high] = *split_result;
@@ -96,7 +96,7 @@ int main()
             std::cerr << "Error: partitioning failed\n";
         }
         const std::size_t median_pos = numbers.size() / 2;
-        if (auto median = accessed_homework::select(std::span{numbers}, median_pos))
+        if (auto median = assessed_homework::select(std::span{numbers}, median_pos))
         {
             std::cout << "median: " << *median << "\n";
         }
@@ -113,9 +113,9 @@ int main()
     return EXIT_SUCCESS;
 }
 
-template <accessed_homework::Comparable T>
+template <assessed_homework::Comparable T>
 [[nodiscard("UNUSED SPLIT - L, R")]]
-std::optional<std::pair<std::size_t, std::size_t>> accessed_homework::split(std::span<T> arr, const T& p) noexcept
+std::optional<std::pair<std::size_t, std::size_t>> assessed_homework::split(std::span<T> arr, const T& p) noexcept
 {
     if (arr.empty()) return std::nullopt;
 
@@ -145,19 +145,19 @@ std::optional<std::pair<std::size_t, std::size_t>> accessed_homework::split(std:
 }
 
 template <typename T>
-const T& accessed_homework::get_random_element(std::span<T> arr) noexcept
+const T& assessed_homework::get_random_element(std::span<T> arr) noexcept
 {
     static std::mt19937 gen(std::random_device{}());
     std::uniform_int_distribution<std::size_t> dist(0, arr.size() - 1);
     return arr[dist(gen)];
 }
 
-template <accessed_homework::Comparable T>
-std::optional<T> accessed_homework::select(std::span<T> arr, std::size_t k) noexcept
+template <assessed_homework::Comparable T>
+std::optional<T> assessed_homework::select(std::span<T> arr, std::size_t k) noexcept
 {
     if (arr.empty()) return std::nullopt;
     T p = get_random_element(std::span{arr});
-    auto split_result = accessed_homework::split(std::span{arr}, p);
+    auto split_result = assessed_homework::split(std::span{arr}, p);
     if (!split_result) return std::nullopt;
     auto [l, r] = *split_result;
     if (k < l) return select(arr.subspan(0, l), k);
