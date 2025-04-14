@@ -9,7 +9,6 @@
 
 namespace accessed_homework
 {
-
 // Концепт, определяющий требования: тип T должен поддерживать операции сравнения (`<`, `==`)
 template <typename T>
 concept Comparable = requires(T a, T b) {
@@ -35,46 +34,14 @@ concept Comparable = requires(T a, T b) {
 //  - Изменяет массив `a` на месте: переставляет элементы так, чтобы
 //    реализовать трёхстороннее разбиение по значению `p`
 template <Comparable T>
-[[nodiscard("UNUSED SPLIT - L, R")]]
-std::optional<std::pair<std::size_t, std::size_t>> split(std::span<T> arr, const T& p) noexcept
-{
-    if (arr.empty()) return std::nullopt;
+std::optional<std::pair<std::size_t, std::size_t>> split(std::span<T> arr, const T& p) noexcept;
 
-    std::size_t n = arr.size();
-    std::size_t i = 0;
-
-    for (std::size_t j = 0; j < n; ++j)
-    {
-        if (arr[j] < p)
-        {
-            std::ranges::swap(arr[i], arr[j]);
-            ++i;
-        }
-    }
-
-    std::size_t l = i;
-    for (std::size_t j = i; j < n; ++j)
-    {
-        if (arr[j] == p)
-        {
-            std::ranges::swap(arr[i], arr[j]);
-            ++i;
-        }
-    }
-
-    return std::make_optional(std::pair{l, i - 1});
-}
 // Функция get_random_element:
 // Вход:
 //  - arr[0..n-1]: - массив из n ≥ 1 элемента
 // Выход: случайный элемент arr[0..n-1] (рановероятно)
 template <typename T>
-const T& get_random_element(std::span<T> arr) noexcept
-{
-    static std::mt19937 gen(std::random_device{}());
-    std::uniform_int_distribution<std::size_t> dist(0, arr.size() - 1);
-    return arr[dist(gen)];
-}
+const T& get_random_element(std::span<T> arr) noexcept;
 
 // Функция select:
 // Вход:
@@ -88,18 +55,8 @@ const T& get_random_element(std::span<T> arr) noexcept
 //
 // Побочные эффекты:
 //  - Модифицирует (переставляет) элементы массива `arr` в процессе выполнения
-template <accessed_homework::Comparable T>
-std::optional<T> select(std::span<T> arr, std::size_t k) noexcept
-{
-    if (arr.empty()) return std::nullopt;
-    T p = get_random_element(std::span{arr});
-    auto split_result = accessed_homework::split(std::span{arr}, p);
-    if (!split_result) return std::nullopt;
-    auto [l, r] = *split_result;
-    if (k < l) return select(arr.subspan(0, l), k);
-    if (k <= r) return p;
-    return select(arr.subspan(r + 1), k - r - 1);
-}
+template <Comparable T>
+std::optional<T> select(std::span<T> arr, std::size_t k) noexcept;
 }  // namespace accessed_homework
 
 int main()
@@ -154,4 +111,56 @@ int main()
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
+}
+
+template <accessed_homework::Comparable T>
+[[nodiscard("UNUSED SPLIT - L, R")]]
+std::optional<std::pair<std::size_t, std::size_t>> accessed_homework::split(std::span<T> arr, const T& p) noexcept
+{
+    if (arr.empty()) return std::nullopt;
+
+    std::size_t n = arr.size();
+    std::size_t i = 0;
+
+    for (std::size_t j = 0; j < n; ++j)
+    {
+        if (arr[j] < p)
+        {
+            std::ranges::swap(arr[i], arr[j]);
+            ++i;
+        }
+    }
+
+    std::size_t l = i;
+    for (std::size_t j = i; j < n; ++j)
+    {
+        if (arr[j] == p)
+        {
+            std::ranges::swap(arr[i], arr[j]);
+            ++i;
+        }
+    }
+
+    return std::make_optional(std::pair{l, i - 1});
+}
+
+template <typename T>
+const T& accessed_homework::get_random_element(std::span<T> arr) noexcept
+{
+    static std::mt19937 gen(std::random_device{}());
+    std::uniform_int_distribution<std::size_t> dist(0, arr.size() - 1);
+    return arr[dist(gen)];
+}
+
+template <accessed_homework::Comparable T>
+std::optional<T> accessed_homework::select(std::span<T> arr, std::size_t k) noexcept
+{
+    if (arr.empty()) return std::nullopt;
+    T p = get_random_element(std::span{arr});
+    auto split_result = accessed_homework::split(std::span{arr}, p);
+    if (!split_result) return std::nullopt;
+    auto [l, r] = *split_result;
+    if (k < l) return select(arr.subspan(0, l), k);
+    if (k <= r) return p;
+    return select(arr.subspan(r + 1), k - r - 1);
 }
